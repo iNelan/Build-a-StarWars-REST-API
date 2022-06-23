@@ -42,7 +42,7 @@ class Characters(db.Model):
     name = db.Column(db.String(250), nullable=False)
     mass = db.Column(db.String(250), nullable=False)
     height = db.Column(db.String(250), nullable=False)
-    addresses = relationship('Favourites', backref='characters', lazy=True)
+    addresses = db.relationship('Favourites', backref='characters', lazy=True)
 
 
 class Planets(db.Model):
@@ -69,7 +69,7 @@ class Vehicles(db.Model):
 
 class Favourites(db.Model):
     __tablename__ = 'favourites'
-    id = db.Column(Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'),
         nullable=False)
