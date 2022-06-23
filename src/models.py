@@ -34,7 +34,7 @@ class  User(db.Model):
     addresses = db.relationship('Favourites', backref='user', lazy=True)
 
 
-class Characters(Base):
+class Characters(db.Model):
     __tablename__ = 'characters'
     # Here we define db.Columns for the table address.
     # Notice that each db.Column is also a normal Python instance attribute.
@@ -45,7 +45,7 @@ class Characters(Base):
     addresses = relationship('Favourites', backref='characters', lazy=True)
 
 
-class Planets(Base):
+class Planets(db.Model):
     __tablename__ = 'planets'
     # Here we define db.Columns for the table address.
     # Notice that each db.Column is also a normal Python instance attribute.
@@ -56,7 +56,7 @@ class Planets(Base):
     diameter = db.relationship('Favourites', backref='planets', lazy=True)
 
 
-class Vehicles(Base):
+class Vehicles(db.Model):
     __tablename__ = 'vehicles'
     # Here we define db.Columns for the table address.
     # Notice that each db.Column is also a normal Python instance attribute.
