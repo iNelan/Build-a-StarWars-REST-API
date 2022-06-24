@@ -8,7 +8,7 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User
+from models import db, User, Planets, Characters, Vehicles
 #from models import Person
 
 app = Flask(__name__)
@@ -30,11 +30,62 @@ def handle_invalid_usage(error):
 def sitemap():
     return generate_sitemap(app)
 
+# @app.route('/user', methods=['GET'])
+# def handle_hello():
+
+#     response_body = {
+#         "msg": "Hello, this is your GET /user response "
+#     }
+
+#     return jsonify(response_body), 200
+
 @app.route('/user', methods=['GET'])
 def handle_hello():
 
+    users = User.query.all() #le pido info a la tabla User
+    userList = list(map(lambda obj: obj.serialize(),users))
+   
     response_body = {
-        "msg": "Hello, this is your GET /user response "
+        "results": userList
+    }
+
+    return jsonify(response_body), 200
+
+
+@app.route('/characters', methods=['GET'])
+def handle_hello():
+
+    users = Characters.query.all() #le pido info a la tabla User
+    charactersList = list(map(lambda obj: obj.serialize(),characters))
+   
+    response_body = {
+        "results": characterList
+    }
+
+    return jsonify(response_body), 200
+
+
+@app.route('/planets', methods=['GET'])
+def handle_hello():
+
+    planet = Planets.query.all() #le pido info a la tabla User
+    planetsList = list(map(lambda obj: obj.serialize(),planets))
+   
+    response_body = {
+        "results": planetsList
+    }
+
+    return jsonify(response_body), 200
+
+
+@app.route('/vehicles', methods=['GET'])
+def handle_hello():
+
+    vehicles = Vehicles.query.all() #le pido info a la tabla User
+    vehiclesList = list(map(lambda obj: obj.serialize(),vehicle))
+   
+    response_body = {
+        "results": vehicleList
     }
 
     return jsonify(response_body), 200
