@@ -53,9 +53,9 @@ def handle_hello():
 
 
 @app.route('/characters', methods=['GET'])
-def handle_hello():
+def handle_characters():
 
-    users = Characters.query.all() #le pido info a la tabla User
+    characters = Characters.query.all() #le pido info a la tabla User
     charactersList = list(map(lambda obj: obj.serialize(),characters))
    
     response_body = {
@@ -66,9 +66,9 @@ def handle_hello():
 
 
 @app.route('/planets', methods=['GET'])
-def handle_hello():
+def handle_planets():
 
-    planet = Planets.query.all() #le pido info a la tabla User
+    planets = Planets.query.all() #le pido info a la tabla User
     planetsList = list(map(lambda obj: obj.serialize(),planets))
    
     response_body = {
@@ -79,13 +79,13 @@ def handle_hello():
 
 
 @app.route('/vehicles', methods=['GET'])
-def handle_hello():
+def handle_vehicles():
 
     vehicles = Vehicles.query.all() #le pido info a la tabla User
-    vehiclesList = list(map(lambda obj: obj.serialize(),vehicle))
+    vehiclesList = list(map(lambda obj: obj.serialize(),vehicles))
    
     response_body = {
-        "results": vehicleList
+        "results": vehiclesList
     }
 
     return jsonify(response_body), 200
