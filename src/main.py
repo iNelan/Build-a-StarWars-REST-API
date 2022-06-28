@@ -8,7 +8,8 @@ from flask_swagger import swagger
 from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from admin import setup_admin
-from models import db, User, Planets, Characters, Vehicles
+from models import db, User, Planets, Characters, Vehicles, Favourites
+import json
 #from models import Person
 
 app = Flask(__name__)
@@ -39,6 +40,8 @@ def sitemap():
 
 #     return jsonify(response_body), 200
 
+
+
 @app.route('/user', methods=['GET'])
 def handle_hello():
 
@@ -51,6 +54,9 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
+
+
+# Sacar la Lista  de todos los characters
 
 @app.route('/characters', methods=['GET'])
 def handle_characters():
@@ -65,10 +71,26 @@ def handle_characters():
     return jsonify(response_body), 200
 
 
+
+# Sacar la info de todos los SINGLEcharacters
+
+@app.route('/characters/<int:id>', methods=['GET'])
+def handle_singlecharacters(id):
+    characters_id = Characters.query.get(id)
+    characters = characters_id.serialize()
+    response_body = {
+        "results": characters
+    }
+    return jsonify(response_body), 200
+
+
+
+# Sacar la Lista  de todos los planets
+
 @app.route('/planets', methods=['GET'])
 def handle_planets():
 
-    planets = Planets.query.all() #le pido info a la tabla User
+    planets = Planets.query.all() #le pido info a la tabla 
     planetsList = list(map(lambda obj: obj.serialize(),planets))
    
     response_body = {
@@ -78,6 +100,20 @@ def handle_planets():
     return jsonify(response_body), 200
 
 
+
+# Sacar la info de todos los SINGLEplanets
+
+@app.route('/planets/<int:id>', methods=['GET'])
+def handle_singleplanets(id):
+    planets_id = Planets.query.get(id)
+    planets = planets_id.serialize()
+    response_body = {
+        "results": planets
+    }
+    return jsonify(response_body), 200
+
+# Sacar la Lista  de todos los vehicles
+
 @app.route('/vehicles', methods=['GET'])
 def handle_vehicles():
 
@@ -86,6 +122,32 @@ def handle_vehicles():
    
     response_body = {
         "results": vehiclesList
+    }
+
+    return jsonify(response_body), 200
+
+
+# Sacar la info de todos los SINGLEvehicles
+
+@app.route('/vehicles/<int:id>', methods=['GET'])
+def handle_singlevehicles(id):
+    vehicles_id = Vehicles.query.get(id)
+    vehicles = vehicles_id.serialize()
+    response_body = {
+        "results": vehicles
+    }
+    return jsonify(response_body), 200
+
+
+
+@app.route('/favourites', methods=['GET'])
+def handle_favourites():
+
+    favourites = Favourites.query.all() #le pido info a la tabla User
+    favouritesList = list(map(lambda obj: obj.serialize(),favourites))
+   
+    response_body = {
+        "results": favouritesList
     }
 
     return jsonify(response_body), 200
