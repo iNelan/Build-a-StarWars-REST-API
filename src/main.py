@@ -46,7 +46,7 @@ def sitemap():
 def handle_hello():
 
     users = User.query.all() #le pido info a la tabla User
-    userList = list(map(lambda obj: obj.serialize(),users))
+    usersList = list(map(lambda obj: obj.serialize(),users))
    
     response_body = {
         "results": userList
@@ -65,7 +65,7 @@ def handle_characters():
     charactersList = list(map(lambda obj: obj.serialize(),characters))
    
     response_body = {
-        "results": characterList
+        "results": charactersList
     }
 
     return jsonify(response_body), 200
