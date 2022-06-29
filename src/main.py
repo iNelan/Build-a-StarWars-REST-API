@@ -165,6 +165,8 @@ def handle_singlefavourites(id):
     return jsonify(response_body), 200
 
 
+# Añadir a favoritos
+
 @app.route('/user/<int:id>', methods=['POST'])
 def handle_addfavourites(id):
     body = json.loads(request.data)
@@ -179,6 +181,17 @@ def handle_addfavourites(id):
     return jsonify(response_body), 200
 
 
+# Eliminar Favoritos
+@app.route('/user/<int:id>/favourites/<int:user_id>', methods=['DELETE'])
+def handle_(id, user_id):
+    favourite = Favourites.query.filter_by(id = user_id).all()
+    print(favourite)
+    db.session.delete(favourite[1])
+    db.session.commit()
+    response_body = {
+        "results": "Favourite was removed"
+    }
+    return jsonify(response_body), 200
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
