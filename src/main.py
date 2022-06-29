@@ -165,8 +165,8 @@ def handle_singlefavourites(id):
     return jsonify(response_body), 200
 
 
-@app.route('/user/<int:id/favourites>', methods=['POST'])
-def handle_createfavourites(id):
+@app.route('/user/<int:id>', methods=['POST'])
+def handle_addfavourites(id):
     body = json.loads(request.data)
     print(body)
     favourites = Favourites(user_id = body["user_id"],characters_id = body["characters_id"],planets_id = body["planets_id"],
