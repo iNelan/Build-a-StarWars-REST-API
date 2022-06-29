@@ -139,6 +139,8 @@ def handle_singlevehicles(id):
     return jsonify(response_body), 200
 
 
+# Sacar la Lista  de todos los Favourites
+
 
 @app.route('/favourites', methods=['GET'])
 def handle_favourites():
@@ -152,7 +154,35 @@ def handle_favourites():
 
     return jsonify(response_body), 200
 
+
+@app.route('/favourites/<int:id>', methods=['GET'])
+def handle_singlefavourites(id):
+    favourites_id = Favourites.query.get(id)
+    favourites = favourites_id.serialize()
+    response_body = {
+        "results": favourites
+    }
+    return jsonify(response_body), 200
+
+
+@app.route('/user/<int:id/favourites>', methods=['POST'])
+def handle_createfavourites(id):
+    body = json.loads(request.data)
+    print(body)
+    favourites = Favourites(user_id = body["user_id"],characters_id = body["characters_id"],planets_id = body["planets_id"],
+    vehicles_id = body["vehicles_id"])
+    db.session.add(favourites)
+    db.session.commit()
+    response_body = {
+        "results": "Favourite was succesfully added"
+    }
+    return jsonify(response_body), 200
+
+
+
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
     app.run(host='0.0.0.0', port=PORT, debug=False)
+
+
